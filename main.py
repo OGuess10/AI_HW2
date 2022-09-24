@@ -19,75 +19,75 @@ class Tree():
       self.root = root
 
 class Node():
-   def __init__(self, vac_loc, dirt_loc):
+   def __init__(self, vac_loc, dirt_loc, cost):
       self.vac_loc = vac_loc
       self.dirt_loc = dirt_loc
       self.children = []
+      self.cost = cost
+      self.next_actions = ['suck']
+      if vac_loc[1] != 1:
+         self.next_actions.append('left')
+      if vac_loc[1] != 5:
+         self.next_actions.append('right')
+      if vac_loc[0] != 1:
+         self.next_actions.append('up')
+      if vac_loc[0] != 4:
+         self.next_actions.append('down')
 
 def insert(parent, action):
    child = new_rooms_node(parent, action)
-   parent.children.append(child)
+   if child != None:
+      parent.children.append(child)
    return child
 
 def new_rooms_node(parent, action):
    if action == 'left':
-      if parent.vac_loc[1] == 1:
-         return None
-      else:
-         cost = 1.0
-         new_vac_loc = (parent.vac_loc[0], parent.vac_loc[1] - 1)
+      cost = 1.0
+      new_vac_loc = (parent.vac_loc[0], parent.vac_loc[1] - 1)
    elif action == 'right':
-      if parent.vac_loc[1] == 5:
-         return None
-      else:
-         cost = 0.9
-         new_vac_loc = (parent.vac_loc[0], parent.vac_loc[1] + 1)
+      cost = 0.9
+      new_vac_loc = (parent.vac_loc[0], parent.vac_loc[1] + 1)
    elif action == 'up':
-      if parent.vac_loc[0] == 1:
-         return None
-      else:
-         cost = 0.8
-         new_vac_loc = (parent.vac_loc[0] - 1, parent.vac_loc[1])
+      cost = 0.8
+      new_vac_loc = (parent.vac_loc[0] - 1, parent.vac_loc[1])
    elif action == 'down':
-      if parent.vac_loc[0] == 4:
-         return None
-      else:
-         cost = 0.7
-         new_vac_loc = (parent.vac_loc[0] + 1, parent.vac_loc[1])
+      cost = 0.7
+      new_vac_loc = (parent.vac_loc[0] + 1, parent.vac_loc[1])
    else:
       if parent.vac_loc in parent.dirt_loc:
          parent.dirt_loc.remove(parent.vac_loc)
       cost = 0.6
       new_vac_loc = parent.vac_loc
+   return Node(new_vac_loc, parent.dirt_loc, parent.cost + cost)
 
-   return Node(new_vac_loc, parent.dirt_loc)
+def uniform_cost_tree_search(tree):
+   fringe = [tree.root]
+   while(True):
+      if len(fringe) == 0:
+         return 'FAIL'
+      #Find lowest cost node in fringe
+      next_node = fringe[0]
+      for node in fringe:
+         if node.cost < next_node.cost:
+            next_node = node
+      print(next_node.vac_loc)
+      #Check if all rooms are cleaned
+      if len(next_node.dirt_loc) == 0:
+         return next_node
+      #Now expand node
+      for action in next_node.next_actions:
+         fringe.append(insert(next_node, action))
 
 
 def main():
-
-    #x = vacuum(0,1), y = dirt(0,1)
-   #  rooms = [[Room(False,False) for i in range(ROOM_COLS)] for j in range(ROOM_ROWS)]
-
-    #instance 1
+   #instance 1
    vacuum = (2,2)
    dirt = [(1,2), (2,4), (3,5)]
-   #  for dirt in dirty_squares:
-   #     rooms[dirt[0]-1][dirt[1]-1].dirt = True
-   #  rooms[init_loc[0]-1][init_loc[1]-1].vac = True
-   tree = Tree(Node(vacuum,dirt))
+   tree = Tree(Node(vacuum,dirt, 0))
    uniform_cost_tree_search(tree)
-    # uniform_cost_graph_search(rooms)
-    # iterative_deepening_tree_search(rooms)
-
-     #x = vacuum(0,1), y = dirt(0,1)
-   #  rooms = [[Room(False,False) for i in range(ROOM_COLS)] for j in range(ROOM_ROWS)]
+   # uniform_cost_graph_search(rooms)
+   # iterative_deepening_tree_search(rooms)
 
     #instance 2
-   #  for dirt in dirty_squares:
-   #     rooms[dirt[0]-1][dirt[1]-1].dirt = True
-   #  rooms[init_loc[0]-1][init_loc[1]-1].vac = True
-    # uniform_cost_tree_search(rooms)
-    # uniform_cost_graph_search(rooms)
-    # iterative_deepening_tree_search(rooms)
 
 main()
