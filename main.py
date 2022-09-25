@@ -215,7 +215,7 @@ def iterative_deepening_tree_search(tree: Tree):
    first_five= [] # 1st 5 expanded nodes
    nodes_gen_depth = [] # Number of nodes generated at each depth
 
-   while (max_depth <= 9):
+   while (True):
       print(f' ---------------- Max Depth: {max_depth} ---------------- ')
       num_nodes = 0
       fringe.clear()
@@ -258,9 +258,6 @@ def iterative_deepening_tree_search(tree: Tree):
          print('Search time-out')
 
 
-   
-
-
 def main():
    #instance 1
    vacuum = (2,2)
@@ -273,7 +270,21 @@ def main():
    print('Instance 1 Uniform Cost Graph Search')
    # uniform_cost_graph_search(tree)
 
-   print('Instance 2 Iterative Deepening Tree Search')
-   # iterative_deepening_tree_search(tree)
+   print('Instance 1 Iterative Deepening Tree Search')
+   iterative_deepening_tree_search(tree)
 
+
+   ### Instance 2 ###
+   vacuum = (3,2)
+   dirt = [(1,2), (2,1), (2,4), (3,3)]
+   tree = Tree(Node(vacuum,dirt, 0.0, None))
+
+   print('Instance 1 Uniform Cost Tree Search')
+   # uniform_cost_tree_search(tree)
+   
+   print('Instance 1 Uniform Cost Graph Search')
+   # uniform_cost_graph_search(tree)
+
+   print('Instance 1 Iterative Deepening Tree Search')
+   # iterative_deepening_tree_search(tree)
 main()
