@@ -22,6 +22,7 @@ class Node():
       self.cost = cost
       self.next_actions = []
       self.depth = 0 # used only for Iterative Deeping Search
+      self.parent = None # parent node
       if vac_loc[1] > 1:
          self.next_actions.append('left')
       if vac_loc[1] < 5:
@@ -48,7 +49,7 @@ class min_queue:
       self.queue = []
 
    def insert(self, node: Node):
-      j = len(self.queue);
+      j = len(self.queue)
       for i in range(len(self.queue)):
          if node.cost > self.queue[i].cost:
             j = i
@@ -118,14 +119,42 @@ def uniform_cost_tree_search(tree: Tree):
             fringe.insert(insert_node(next_node, action))
             #next_node.next_actions.remove(action)
 
-
+# todo
+# create expand helper function
+# create generate node helper function
+# track time to search
+# create solution list from solution_found
+# print results when solution found
 def iterative_deepening_tree_search(tree: Tree):
    #bds, but at increasing depths
    #next node determined by lowest row, then lowest column
    
    max_depth = 0 # 0-indexed, root.depth = 0
+   solution_node = None
    solution = []
    fringe = []
+   expanded_nodes = []
+   nodes_generated = []
+
+   while (True):
+      fringe.insert(tree.root)
+      expanded_nodes.insert(tree.root)
+      while (True):
+         if (len(fringe) == 0): 
+            max_depth = max_depth + 1
+            break
+         current_node = fringe.pop()
+         if (len(current_node.dirt_loc) == 0):
+            solution_node = current_node
+         #expand
+         if (current_node.depth >= max_depth):
+            max_depth = max_depth + 1
+            break
+         #generate node for up, left, suck, right, down
+         #expand in that order
+         max_depth = max_depth + 1
+         break
+
 
    
 
