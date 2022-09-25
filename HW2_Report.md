@@ -15,7 +15,7 @@ To implement each search algorithm, we created several helper functions and clas
 <p> This search algorithm has three different functions associated with it - the main function, iterative_deepening_tree_search, and two helper functions, idts_expand and idts_sol. </p><br>
 The main function follows the pseudocode closely. It uses various variables to keep track of the necessary statistics. <br>
 Idts_expand generates new nodes based on the possible actions of the current state node and adds them to the fringe in smallest coordinate order. <br>
-Idts_sol prints out the statics for the search algorithm once the goal is found for a given instance. <br> <br>
+Idts_sol prints out the statics for the search algorithm once the goal is found for a given instance, including the list of nodes on the path to the goal. <br> <br>
 
 ### Uniform Cost Tree Search
 
@@ -33,13 +33,13 @@ Hardware used was MacBook Pro and a Dell laptop <br>
 
 | Result | Uniform Cost Tree Search| Uniform Cost Graph Search | Iterative Deepening Tree Search |
 | --- | --- | --- | --- |
-| 1st 5 Exp. Nodes | Start(no action), Suck, Down, Up, Right | --- | --- |
+| 1st 5 Exp. Nodes | Start(no action), Suck, Down, Up, Right | --- | Initial state, Up, Left, Right, Down |
 | No. Nodes Expanded | 75494 | --- | --- |
 | No. Nodes Generated | 1441976 | --- | --- |
 | CPU Execution TIme (seconds) | 4974.9 | --- | --- |
-| Solution | Start, Up, Suck, Right, Right, Down, Suck, Down, Right, Suck | --- | --- |
-| No. of Moves | 9 | --- | --- |
-| Cost of Solution | 6.7 | --- | --- |
+| Solution | Start, Up, Suck, Right, Right, Down, Suck, Down, Right, Suck | --- | Start, Up, Suck, Down, Right, Right, Suck, Right, Down, Suck |
+| No. of Moves | 9 | --- | 9 |
+| Cost of Solution | 6.7 | --- | 6.7 |
 ### Instance 2
 
 | Result | Uniform Cost Tree Search| Uniform Cost Graph Search | Iterative Deepening Tree Search |
