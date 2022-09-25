@@ -10,7 +10,11 @@ For the uniform cost tree search algorithm, a minimum queue was created for the 
 ## Programming Language, Hardware
 The programming languge we used was Python. Hardware used was MacBook Pro and ...
 
+Language: Python v3.9
+
 ## Results
+
+### Instance 1
 
 | Result | Uniform Cost Tree Search| Uniform Cost Graph Search | Iterative Deepening Tree Search |
 | --- | --- | --- | --- |
@@ -21,5 +25,14 @@ The programming languge we used was Python. Hardware used was MacBook Pro and ..
 | Solution | Start, Up, Suck, Right, Right, Down, Suck, Down, Right, Suck | --- | --- |
 | No. of Moves | 9 | --- | --- |
 | Cost of Solution | 6.7 | --- | --- |
+### Instance 2
 
+| Result | Uniform Cost Tree Search| Uniform Cost Graph Search | Iterative Deepening Tree Search |
+| --- | --- | --- | --- |
+| 1st 5 Exp. Nodes | --- | --- | --- |
+| No. Nodes Generated | --- | --- | --- |
+| CPU Execution TIme (seconds) | --- | --- | --- |
+| Solution | --- | --- | --- |
+| No. of Moves | --- | --- | --- |
+| Cost of Solution | --- | --- | --- |
 Uniform cost tree search exceeded one hour.
