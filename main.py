@@ -190,7 +190,6 @@ def idts_sol(goal_node: Node, first_five: list, start_time: float, num_expanded:
       solution_path.insert(0, curr_node.parent)
       curr_node = curr_node.parent
    
-   print(' ---- SOLUTION FOUND ---- ')
    print('1st Five Expanded Nodes:')
    for i in range(0, 5):
       print(first_five[i])
@@ -240,6 +239,7 @@ def iterative_deepening_tree_search(tree: Tree):
          print(f'max {max_depth}:\t{current_node}')
          
          if (len(current_node.dirt_loc) == 0): # check goal
+            print(' ---- SOLUTION FOUND ---- ')
             idts_sol(current_node, first_five, start_time, num_expanded, nodes_gen_depth)
             return
 
@@ -257,6 +257,7 @@ def iterative_deepening_tree_search(tree: Tree):
       max_depth = max_depth + 1
       if (time.time() - start_time > 60*60):
          print('Search time-out')
+         return
 
 
 def main():
@@ -280,12 +281,12 @@ def main():
    dirt = [(1,2), (2,1), (2,4), (3,3)]
    tree = Tree(Node(vacuum,dirt, 0.0, None))
 
-   print('Instance 1 Uniform Cost Tree Search')
+   print('Instance 2 Uniform Cost Tree Search')
    # uniform_cost_tree_search(tree)
    
-   print('Instance 1 Uniform Cost Graph Search')
+   print('Instance 2 Uniform Cost Graph Search')
    # uniform_cost_graph_search(tree)
 
-   print('Instance 1 Iterative Deepening Tree Search')
+   print('Instance 2 Iterative Deepening Tree Search')
    # iterative_deepening_tree_search(tree)
 main()
