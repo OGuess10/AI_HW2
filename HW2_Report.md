@@ -3,7 +3,7 @@
 Olivia Guess, Melissa Tully <br> <br>
 
 ## Implementation
-To implement each search algorithm, we created several helper functions and classes. We created a node class that describes each node of a search tree or graph, include parents/children, vacuum location, dirt locations, cost, depth, and next possible actions. insert_node and new_rooms_node creates a node from a given parent node and from a specified action. A Tree class was also created to store the root node, which describes the initial environment.
+To implement each search algorithm, we created several helper functions and classes. We created a node class that describes each node of a search tree or graph, include parents/children, vacuum location, dirt locations, cost, depth, state, and next possible actions. insert_node and new_rooms_node creates a node from a given parent node and from a specified action. A Tree class was also created to store the root node, which describes the initial environment.
 
 ### Overall Program
 
@@ -44,10 +44,11 @@ Hardware used was MacBook Pro and a Dell laptop <br>
 
 | Result | Uniform Cost Tree Search| Uniform Cost Graph Search | Iterative Deepening Tree Search |
 | --- | --- | --- | --- |
-| 1st 5 Exp. Nodes | --- | --- | --- |
+| 1st 5 Exp. Nodes | Start, Suck, Down, Up, Right | --- | --- |
 | No. Nodes Generated | --- | --- | --- |
 | CPU Execution TIme (seconds) | --- | --- | --- |
-| Solution | --- | --- | --- |
-| No. of Moves | --- | --- | --- |
-| Cost of Solution | --- | --- | --- |
+| Solution | Start, Left, Up, Suck, Up, Right, Right, Down, Down, Suck, Right, Up, Suck | --- | --- |
+| No. of Moves | 12 | --- | --- |
+| Cost of Solution | 9.3 | --- | --- |
+
 Uniform cost tree search exceeded one hour.
