@@ -292,11 +292,14 @@ def uniform_cost_graph_search(tree: Tree):
          for action in next_node.next_actions:
          # if((next_node.cost > 5 and len(next_node.dirt_loc) < 3) or next_node.cost <= 5):
             node = insert_node(next_node, action)
-            for i in closed:
-               if((next_node.vac_loc in closed[i].vac_loc) and (next_node.dirt_loc in closed[i].dirt_loc)):
-                  if (node != None):
-                     fringe.insert(node)
-                     generated = generated + len(node.next_actions)
+            is_in_closed = False
+            if (node != None):
+               for i in closed:
+                  if((node.vac_loc in closed[i].vac_loc) and (node.dirt_loc in closed[i].dirt_loc)):
+                     is_in_closed = True
+               if(not is_in_closed):
+                  fringe.insert(node)
+                  generated = generated + len(node.next_actions)
 
 def main():
    #instance 1
