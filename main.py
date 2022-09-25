@@ -79,7 +79,6 @@ class min_queue:
 
 #This function takes a parent node and an action and creates a new node of the action
 def new_rooms_node(parent: Node, action: str)-> Node:
-   #child = Node((0,0),parent.dirt_loc.copy(), 0)
    vac = parent.vac_loc
    cost = parent.cost
    dirts = parent.dirt_loc.copy()
@@ -100,7 +99,7 @@ def new_rooms_node(parent: Node, action: str)-> Node:
          dirts.remove(parent.vac_loc)
       cost = cost + 0.6
       vac = parent.vac_loc
-   child = Node(vac, dirts, cost)
+   child = Node(vac, dirts, cost, action)
    child.parent = parent
    child.depth = parent.depth + 1
    return child
@@ -266,7 +265,7 @@ def main():
    #instance 1
    vacuum = (2,2)
    dirt = [(1,2), (2,4), (3,5)]
-   tree = Tree(Node(vacuum,dirt, 0.0))
+   tree = Tree(Node(vacuum,dirt, 0.0, None))
    
    print('Instance 1 Uniform Cost Tree Search')
    # uniform_cost_tree_search(tree)
