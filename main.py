@@ -24,15 +24,16 @@ class Node():
       self.dirt_loc = dirt_loc
       self.children = []
       self.cost = cost
-      self.next_actions = ['suck']
+      self.next_actions = []
       if vac_loc[1] > 1:
          self.next_actions.append('left')
       if vac_loc[1] < 5:
          self.next_actions.append('right')
-      if vac_loc[0] >1:
+      if vac_loc[0] > 1:
          self.next_actions.append('up')
       if vac_loc[0] < 4:
          self.next_actions.append('down')
+      self.next_actions.append('suck')
 
 def insert_node(parent, action):
    child = new_rooms_node(parent, action)
@@ -46,40 +47,39 @@ class min_queue:
       self.queue = []
 
    def insert(self, node):
+      j = 0;
       for i in range(len(self.queue)):
          if node.cost < self.queue[i].cost:
+            j = 1
             break
-      self.queue.insert(0,node)
-
-   def size(self):
-      return len(self.queue)
-
-   def is_empty(self):
-      return self.size == 0
+      self.queue.insert(j,node)
 
    def pop(self):
       return self.queue.pop(0)
 
 def new_rooms_node(parent, action):
-   child = Node((0,0),parent.dirt_loc.copy(), 0)
+   #child = Node((0,0),parent.dirt_loc.copy(), 0)
+   vac = parent.vac_loc
+   cost = parent.cost
+   dirts = parent.dirt_loc.copy()
    if action == 'left':
-      child.cost = parent.cost + 1.0
-      child.vac_loc = (parent.vac_loc[0], parent.vac_loc[1] - 1)
+      cost = cost + 1.0
+      vac = (parent.vac_loc[0], parent.vac_loc[1] - 1)
    elif action == 'right':
-      child.cost = parent.cost + 0.9
-      child.vac_loc = (parent.vac_loc[0], parent.vac_loc[1] + 1)
+      cost = cost + 0.9
+      vac = (parent.vac_loc[0], parent.vac_loc[1] + 1)
    elif action == 'up':
-      child.cost = parent.cost + 0.8
-      child.vac_loc = (parent.vac_loc[0] - 1, parent.vac_loc[1])
+      cost = cost + 0.8
+      vac = (parent.vac_loc[0] - 1, parent.vac_loc[1])
    elif action == 'down':
-      child.cost = parent.cost + 0.7
-      child.vac_loc = (parent.vac_loc[0] + 1, parent.vac_loc[1])
+      cost = cost + 0.7
+      vac = (parent.vac_loc[0] + 1, parent.vac_loc[1])
    else: #suck
       if parent.vac_loc in parent.dirt_loc:
-         child.dirt_loc.remove(parent.vac_loc)
-      child.cost = parent.cost + 0.6
-      child.vac_loc = parent.vac_loc
-   return child
+         dirts.remove(parent.vac_loc)
+      cost = cost + 0.6
+      vac = parent.vac_loc
+   return Node(vac, dirts, cost)
 
 def uniform_cost_tree_search(tree):
    #fringe = [tree.root]
@@ -87,21 +87,28 @@ def uniform_cost_tree_search(tree):
    fringe.insert(tree.root)
    expanded = 0
    while(True):
-      if fringe.size == 0:
-         return 'FAIL'
+   #for i in range(0,100):
+      if len(fringe.queue) == 0:
+         print("FAIL")
+         return 0
+
       #Pop the lowest cost node in fringe
       next_node = fringe.pop()
+
       #Check if all rooms are cleaned
       if len(next_node.dirt_loc) == 0:
+         print("Final:")
          print("Vac: ", next_node.vac_loc, "\tCost: ", next_node.cost, "\tDirt: ", next_node.dirt_loc)
          return next_node
       #fringe.remove(next_node)
       #Now expand node
-      if expanded < 5:
-         print("Vac: ", next_node.vac_loc, "\tCost: ", next_node.cost, "\tDirt: ", next_node.dirt_loc)
-         expanded = expanded + 1
+      #if expanded < 5:
+      print("Vac: ", next_node.vac_loc, "\tCost: ", next_node.cost, "\tDirt: ", next_node.dirt_loc, "\tActions: ", next_node.next_actions)
+      #   expanded = expanded + 1
       for action in next_node.next_actions:
-         fringe.insert(insert_node(next_node, action))
+         if(next_node.cost < 6.0):
+            fringe.insert(insert_node(next_node, action))
+            next_node.next_actions.remove(action)
 
 
 def main():
