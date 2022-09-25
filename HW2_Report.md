@@ -12,13 +12,19 @@ To implement each search algorithm, we created several helper functions and clas
 
 ### Iterative Deepening Tree Search
 
-<p> This search algorithm has three different functions associated with it - the main function, iterative_deepening_tree_search, and two helper functions, idts_expand and idts_sol.   </p><br>
-For the uniform cost tree search algorithm, a minimum queue was created for the fringe. Every insertion places that node into sorted order from least to greatest. The initial node is placed into the queue first and is then popped off and expanded. It will expand each possible action of that node and add those nodes to the fringe. This is done repeatedly until the goal state is reached (all rooms are clean), until the time has passed an hour, or there are no more items in the fringe (meaning a solution was not found).
+<p> This search algorithm has three different functions associated with it - the main function, iterative_deepening_tree_search, and two helper functions, idts_expand and idts_sol. </p><br>
+The main function follows the pseudocode closely. It uses various variables to keep track of the necessary statistics. <br>
+Idts_expand generates new nodes based on the possible actions of the current state node and adds them to the fringe in smallest coordinate order. <br>
+Idts_sol prints out the statics for the search algorithm once the goal is found for a given instance. <br> <br>
+
+### Uniform Cost Tree Search
+
+<p> For the uniform cost tree search algorithm, a minimum queue was created for the fringe. Every insertion places that node into sorted order from least to greatest. The initial node is placed into the queue first and is then popped off and expanded. It will expand each possible action of that node and add those nodes to the fringe. This is done repeatedly until the goal state is reached (all rooms are clean), until the time has passed an hour, or there are no more items in the fringe (meaning a solution was not found). </p>
 
 ## Programming Language, Hardware
-The programming languge we used was Python. Hardware used was MacBook Pro and ...
 
 Language: Python v3.9 <br>
+Hardware used was MacBook Pro and a Dell laptop <br>
 <p> Both instances of Iterative Deepening Tree Search were run on a Dell laptop with an Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz </p>
 
 ## Results
