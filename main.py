@@ -29,6 +29,7 @@ class Node():
       self.next_actions = []
       self.depth = 0 # used only for Iterative Deeping Search
       self.parent = None # parent node
+      self.state = 'open'
       #When node is expanded, these are the possible actions/branches it can take
       self.action = action
       if vac_loc[1] > 1:
@@ -259,6 +260,59 @@ def iterative_deepening_tree_search(tree: Tree):
          print('Search time-out')
          return
 
+def uniform_cost_graph_search(tree: Tree):
+   closed = []
+   fringe = min_queue()
+   fringe.insert(tree.root)
+   start = datetime.datetime.now()
+   expanded = 0
+   generated = 1
+   while(True):
+      
+      #if running longer than one hour
+      if datetime.datetime.now() > STOP:
+         print("Time exceeds one hour.")
+         print("Nodes Expanded: ", expanded, "\tNodes Generated: ", generated, "\tTime: ", (datetime.datetime.now() - start).total_seconds())
+         return 0
+
+      #If solution cannot be found
+      if len(fringe.queue) == 0:
+         print("FAIL")
+         return 0
+
+      #Pop the lowest cost node in fringe
+      next_node = fringe.pop()
+      expanded = expanded + 1
+      
+      #Check if all rooms are cleaned
+      if len(next_node.dirt_loc) == 0:
+         print("Path was found!")
+         print("Nodes Expanded: ", expanded, "\tNodes Generated: ", generated, "\tTime: ", (datetime.datetime.now() - start).total_seconds())
+         parent = next_node.parent
+         moves = 1
+         print("Sequence:")
+         while parent != None:
+            print(parent.action)
+            moves = moves + 1
+         print("Number of moves: ", moves)
+         print("Cost: ", next_node.cost)
+         return next_node
+
+      #Check if state of node is open or closed
+      if next_node.state != 'closed':
+         closed.append(next_node)
+         next_node.state = 'closed'
+          #Now expand node
+         if expanded <= 5:
+            print(next_node.action)
+         for action in next_node.next_actions:
+         # if((next_node.cost > 5 and len(next_node.dirt_loc) < 3) or next_node.cost <= 5):
+            node = insert_node(next_node, action)
+            for i in closed:
+               if((next_node.vac_loc in closed[i].vac_loc) and (next_node.dirt_loc in closed[i].dirt_loc)):
+                  if (node != None):
+                     fringe.insert(node)
+                     generated = generated + len(node.next_actions)
 
 def main():
    #instance 1
@@ -273,7 +327,7 @@ def main():
    # uniform_cost_graph_search(tree)
 
    print('Instance 1 Iterative Deepening Tree Search')
-   iterative_deepening_tree_search(tree)
+   # iterative_deepening_tree_search(tree)
 
 
    ### Instance 2 ###
@@ -282,7 +336,7 @@ def main():
    tree = Tree(Node(vacuum,dirt, 0.0, None))
 
    print('Instance 2 Uniform Cost Tree Search')
-   # uniform_cost_tree_search(tree)
+   uniform_cost_tree_search(tree)
    
    print('Instance 2 Uniform Cost Graph Search')
    # uniform_cost_graph_search(tree)
