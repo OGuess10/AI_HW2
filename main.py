@@ -109,10 +109,10 @@ def uniform_cost_tree_search(tree):
       #fringe.remove(next_node)
       #Now expand node
       #if expanded < 5:
-      #print("Vac: ", next_node.vac_loc, "\tCost: ", next_node.cost, "\tDirt: ", next_node.dirt_loc, "\tActions: ", next_node.next_actions)
+      print("Vac: ", next_node.vac_loc, "\tCost: ", next_node.cost, "\tDirt: ", next_node.dirt_loc, "\tActions: ", next_node.next_actions)
       #expanded = expanded + 1
       for action in next_node.next_actions:
-         if(next_node.cost < 6.0):
+         if(next_node.cost < 7.0):
             fringe.insert(insert_node(next_node, action))
             #next_node.next_actions.remove(action)
 
