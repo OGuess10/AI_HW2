@@ -48,15 +48,19 @@ class min_queue:
       self.queue = []
 
    def insert(self, node: Node):
-      j = 0;
+      j = len(self.queue);
       for i in range(len(self.queue)):
-         if node.cost < self.queue[i].cost:
-            j = 1
+         if node.cost > self.queue[i].cost:
+            j = i
             break
-      self.queue.insert(j,node)
+      if j == len(self.queue):
+         self.queue = self.queue[:j] + [node]
+      else:
+         self.queue = self.queue[:j] + [node] + self.queue[j:]
+      #self.queue.insert(j,node)
 
    def pop(self):
-      return self.queue.pop(0)
+      return self.queue.pop(len(self.queue)-1)
 
 
 def new_rooms_node(parent: Node, action: str):
@@ -93,7 +97,9 @@ def uniform_cost_tree_search(tree: Tree):
       if len(fringe.queue) == 0:
          print("FAIL")
          return 0
-
+      # print("\n\n")
+      # for i in fringe.queue:
+      #    print(i.cost, end=" ")
       #Pop the lowest cost node in fringe
       next_node = fringe.pop()
 
@@ -105,12 +111,12 @@ def uniform_cost_tree_search(tree: Tree):
       #fringe.remove(next_node)
       #Now expand node
       #if expanded < 5:
-      print("Vac: ", next_node.vac_loc, "\tCost: ", next_node.cost, "\tDirt: ", next_node.dirt_loc, "\tActions: ", next_node.next_actions)
-      #   expanded = expanded + 1
+      #print("Vac: ", next_node.vac_loc, "\tCost: ", next_node.cost, "\tDirt: ", next_node.dirt_loc, "\tActions: ", next_node.next_actions)
+      #expanded = expanded + 1
       for action in next_node.next_actions:
          if(next_node.cost < 6.0):
             fringe.insert(insert_node(next_node, action))
-            next_node.next_actions.remove(action)
+            #next_node.next_actions.remove(action)
 
 
 def iterative_deepening_tree_search(tree: Tree):
@@ -128,6 +134,7 @@ def main():
    #instance 1
    vacuum = (2,2)
    dirt = [(1,2), (2,4), (3,5)]
+   #dirt = [(2,2)]
    tree = Tree(Node(vacuum,dirt, 0.0))
    uniform_cost_tree_search(tree)
    # uniform_cost_graph_search(tree)
