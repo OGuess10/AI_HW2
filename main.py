@@ -2,9 +2,9 @@
 #Olivia Guess, Melissa Tully
 #9/20/22
 
+import time
 import datetime
 STOP = datetime.datetime.now() + datetime.timedelta(hours=1)
-
 #Rooms
 ROOM_TOTAL = 20
 ROOM_ROWS = 4
@@ -74,7 +74,7 @@ class min_queue:
       return self.queue.pop(len(self.queue)-1)
 
 #This function takes a parent node and an action and creates a new node of the action
-def new_rooms_node(parent: Node, action: str):
+def new_rooms_node(parent: Node, action: str)-> Node:
    #child = Node((0,0),parent.dirt_loc.copy(), 0)
    vac = parent.vac_loc
    cost = parent.cost
@@ -148,41 +148,49 @@ def uniform_cost_tree_search(tree: Tree):
             fringe.insert(node)
             generated = generated + len(node.next_actions)
 
+def idts_expand(node: Node, fringe: list, first_five: list, num_nodes: int)-> None:
+   ''' Expands each possible state after the given node and adds it to the fringe. '''
+   new_nodes = []
+   for action in node.next_actions:
+      new_rooms_node(node, action)
+
+def idts_sol():
+   pass
+
 # todo
-# create expand helper function
-# create generate node helper function
-# track time to search
-# create solution list from solution_found
-# print results when solution found
+#  create expand helper function
+#  create generate node helper function
+#  track time to search
+#  create solution list from solution_found
+#  print results when solution found
 def iterative_deepening_tree_search(tree: Tree):
-   #bds, but at increasing depths
+   ''' BFS, but at increasing depths. '''
    #next node determined by lowest row, then lowest column
-   
+
+   start_time = time.time()
    max_depth = 0 # 0-indexed, root.depth = 0
    solution_node = None
    solution = []
    fringe = []
-   expanded_nodes = []
-   nodes_generated = []
+   first_five= []
+   num_nodes_generated = []
 
    while (True):
-      fringe.insert(tree.root)
-      expanded_nodes.insert(tree.root)
+      print(f'max depth: {max_depth}')
+      num_nodes = 0
+      idts_expand(tree.root, fringe, first_five, num_nodes)
       while (True):
          if (len(fringe) == 0): 
-            max_depth = max_depth + 1
             break
          current_node = fringe.pop()
          if (len(current_node.dirt_loc) == 0):
-            solution_node = current_node
+            idts_sol(current_node)
          #expand
          if (current_node.depth >= max_depth):
-            max_depth = max_depth + 1
             break
-         #generate node for up, left, suck, right, down
-         #expand in that order
-         max_depth = max_depth + 1
-         break
+         idts_expand(current_node, fringe, first_five, num_nodes)
+      num_nodes_generated.append((max_depth, num_nodes))
+      max_depth = max_depth + 1
 
 
    
