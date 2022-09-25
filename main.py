@@ -156,7 +156,7 @@ def uniform_cost_tree_search(tree: Tree):
             fringe.insert(node)
             generated = generated + len(node.next_actions)
 
-def idts_expand(node: Node, fringe: list, num_nodes: int)-> None:
+def idts_expand(node: Node, fringe: list)-> int:
    ''' Expands each possible state after the given node and adds it to the fringe. '''
    actions = ['up', 'left', 'suck', 'right', 'down']
    new_nodes = []
@@ -169,20 +169,16 @@ def idts_expand(node: Node, fringe: list, num_nodes: int)-> None:
       if action in node_action:
          new_nodes.append((node_action[action], action))
    
-   num_nodes + len(new_nodes)
    while (len(new_nodes) > 0):
       next = new_nodes.pop()
       fringe.append(next[0])
       print(f'{next[1]}\t{next[0]}')
+   return len(new_nodes)
 
 
-def idts_sol(goal_node: Node, first_five: list, start_time: float, num_expanded: int, nodes_gen_depth: list[list]):
+def idts_sol(goal_node: Node, first_five: list, start_time: float, num_expanded: int, num_generated: int):
    stop_time = time.time()
    exec_time = stop_time - start_time
-   
-   num_generated = 0
-   for pair in nodes_gen_depth:
-      num_generated = num_generated + pair[1]
 
    solution_path = []
    solution_path.append(goal_node)
@@ -200,11 +196,6 @@ def idts_sol(goal_node: Node, first_five: list, start_time: float, num_expanded:
    for node in solution_path:
       print(node)
    
-
-# todo
-#  track time to search
-#  create solution list from solution_found
-#  print results when solution found
 def iterative_deepening_tree_search(tree: Tree):
    ''' BFS, but at increasing depths. '''
 
@@ -213,17 +204,16 @@ def iterative_deepening_tree_search(tree: Tree):
    solution_node = None
    fringe = [] # fringe of search
    num_expanded = 0 # total number of expanded nodes
+   num_generated = 0 # total number of generated nodes
    first_five= [] # 1st 5 expanded nodes
-   nodes_gen_depth = [] # Number of nodes generated at each depth
 
    while (True):
       print(f' ---------------- Max Depth: {max_depth} ---------------- ')
-      num_nodes = 0
       fringe.clear()
       fringe.append(tree.root)
       if (len(first_five) < 5):
          first_five.append(tree.root)
-      num_nodes = num_nodes + 1
+      num_generated = num_generated + 1
       
       # BFS at max_depth
       while (True):
@@ -241,20 +231,14 @@ def iterative_deepening_tree_search(tree: Tree):
          
          if (len(current_node.dirt_loc) == 0): # check goal
             print(' ---- SOLUTION FOUND ---- ')
-            idts_sol(current_node, first_five, start_time, num_expanded, nodes_gen_depth)
+            idts_sol(current_node, first_five, start_time, num_expanded, num_generated)
             return
 
          if (current_node.depth > max_depth): # check depth
             continue
 
-         idts_expand(current_node, fringe, num_nodes)
+         num_generated = num_generated + idts_expand(current_node, fringe)
 
-      nodes_gen_depth.append((max_depth, num_nodes))
-      # if last two equal, search fails
-      if (len(nodes_gen_depth) >= 2 and nodes_gen_depth[-1] == nodes_gen_depth[-2]):
-         print('deep search error')
-         idts_sol(tree.root, first_five, start_time, num_expanded, nodes_gen_depth)
-         return
       max_depth = max_depth + 1
       if (time.time() - start_time > 60*60):
          print('Search time-out')
@@ -343,4 +327,5 @@ def main():
 
    print('Instance 2 Iterative Deepening Tree Search')
    # iterative_deepening_tree_search(tree)
+
 main()
