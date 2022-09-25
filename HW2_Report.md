@@ -10,7 +10,7 @@ Olivia Guess, Melissa Tully <br>
 
 ## Results
 
-| Result | Uniform Cost T Search| Uniform Cost G Search | Iterative Deepening T Search |
+| Result | Uniform Cost Tree Search| Uniform Cost Graph Search | Iterative Deepening Tree Search |
 | --- | --- | --- | --- |
 | 1st 5 Exp. Nodes | --- | --- | --- |
 | No. Nodes Generated | --- | --- | --- |
