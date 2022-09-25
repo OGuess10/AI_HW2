@@ -14,17 +14,15 @@ UP = 0.8
 DOWN = 0.7
 SUCK = 0.6
 
-class Tree():
-   def __init__(self, root):
-      self.root = root
-
 class Node():
-   def __init__(self, vac_loc, dirt_loc, cost):
+   def __init__(self, vac_loc: tuple, dirt_loc: list, cost: float):
       self.vac_loc = vac_loc
       self.dirt_loc = dirt_loc
       self.children = []
       self.cost = cost
       self.next_actions = []
+      self.depth = 0 # used only for Iterative Deeping Search
+      self.parent = None # parent node
       if vac_loc[1] > 1:
          self.next_actions.append('left')
       if vac_loc[1] < 5:
@@ -35,7 +33,11 @@ class Node():
          self.next_actions.append('down')
       self.next_actions.append('suck')
 
-def insert_node(parent, action):
+class Tree():
+   def __init__(self, root: Node):
+      self.root = root
+
+def insert_node(parent: Node, action: str):
    child = new_rooms_node(parent, action)
    if child != None:
       parent.children.append(child)
@@ -46,8 +48,8 @@ class min_queue:
    def __init__(self):
       self.queue = []
 
-   def insert(self, node):
-      j = len(self.queue);
+   def insert(self, node: Node):
+      j = len(self.queue)
       for i in range(len(self.queue)):
          if node.cost > self.queue[i].cost:
             j = i
@@ -61,7 +63,8 @@ class min_queue:
    def pop(self):
       return self.queue.pop(len(self.queue)-1)
 
-def new_rooms_node(parent, action):
+
+def new_rooms_node(parent: Node, action: str):
    #child = Node((0,0),parent.dirt_loc.copy(), 0)
    vac = parent.vac_loc
    cost = parent.cost
@@ -85,7 +88,7 @@ def new_rooms_node(parent, action):
       vac = parent.vac_loc
    return Node(vac, dirts, cost)
 
-def uniform_cost_tree_search(tree):
+def uniform_cost_tree_search(tree: Tree):
    #fringe = [tree.root]
    fringe = min_queue()
    fringe.insert(tree.root)
@@ -116,6 +119,45 @@ def uniform_cost_tree_search(tree):
             fringe.insert(insert_node(next_node, action))
             #next_node.next_actions.remove(action)
 
+# todo
+# create expand helper function
+# create generate node helper function
+# track time to search
+# create solution list from solution_found
+# print results when solution found
+def iterative_deepening_tree_search(tree: Tree):
+   #bds, but at increasing depths
+   #next node determined by lowest row, then lowest column
+   
+   max_depth = 0 # 0-indexed, root.depth = 0
+   solution_node = None
+   solution = []
+   fringe = []
+   expanded_nodes = []
+   nodes_generated = []
+
+   while (True):
+      fringe.insert(tree.root)
+      expanded_nodes.insert(tree.root)
+      while (True):
+         if (len(fringe) == 0): 
+            max_depth = max_depth + 1
+            break
+         current_node = fringe.pop()
+         if (len(current_node.dirt_loc) == 0):
+            solution_node = current_node
+         #expand
+         if (current_node.depth >= max_depth):
+            max_depth = max_depth + 1
+            break
+         #generate node for up, left, suck, right, down
+         #expand in that order
+         max_depth = max_depth + 1
+         break
+
+
+   
+
 
 def main():
    #instance 1
@@ -124,9 +166,9 @@ def main():
    #dirt = [(2,2)]
    tree = Tree(Node(vacuum,dirt, 0.0))
    uniform_cost_tree_search(tree)
-   # uniform_cost_graph_search(rooms)
-   # iterative_deepening_tree_search(rooms)
+   # uniform_cost_graph_search(tree)
+   # iterative_deepening_tree_search(tree)
 
-    #instance 2
+   #instance 2
 
 main()
