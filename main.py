@@ -2,6 +2,9 @@
 #Olivia Guess, Melissa Tully
 #9/20/22
 
+import datetime
+STOP = datetime.datetime.now() + datetime.timedelta(hours=1)
+
 #Rooms
 ROOM_TOTAL = 20
 ROOM_ROWS = 4
@@ -14,8 +17,9 @@ UP = 0.8
 DOWN = 0.7
 SUCK = 0.6
 
+#This is a node class for the vacuum world problem
 class Node():
-   def __init__(self, vac_loc: tuple, dirt_loc: list, cost: float):
+   def __init__(self, vac_loc: tuple, dirt_loc: list, cost: float, action: str):
       self.vac_loc = vac_loc
       self.dirt_loc = dirt_loc
       self.children = []
@@ -23,6 +27,8 @@ class Node():
       self.next_actions = []
       self.depth = 0 # used only for Iterative Deeping Search
       self.parent = None # parent node
+      #When node is expanded, these are the possible actions/branches it can take
+      self.action = action
       if vac_loc[1] > 1:
          self.next_actions.append('left')
       if vac_loc[1] < 5:
@@ -33,17 +39,21 @@ class Node():
          self.next_actions.append('down')
       self.next_actions.append('suck')
 
+#This is a tree class with a root node
 class Tree():
    def __init__(self, root: Node):
       self.root = root
 
+#this function connects both child and parent nodes and creates a node by calling new_rooms_node function
 def insert_node(parent: Node, action: str):
    child = new_rooms_node(parent, action)
    if child != None:
       parent.children.append(child)
+      child.parent = parent
       return child
    return None
 
+#This class is a minimum queue, meaning the node with the least cost is at the front of the queue
 class min_queue:
    def __init__(self):
       self.queue = []
@@ -63,7 +73,7 @@ class min_queue:
    def pop(self):
       return self.queue.pop(len(self.queue)-1)
 
-
+#This function takes a parent node and an action and creates a new node of the action
 def new_rooms_node(parent: Node, action: str):
    #child = Node((0,0),parent.dirt_loc.copy(), 0)
    vac = parent.vac_loc
@@ -81,43 +91,62 @@ def new_rooms_node(parent: Node, action: str):
    elif action == 'down':
       cost = cost + 0.7
       vac = (parent.vac_loc[0] + 1, parent.vac_loc[1])
-   else: #suck
+   elif action == 'suck':
       if parent.vac_loc in parent.dirt_loc:
          dirts.remove(parent.vac_loc)
       cost = cost + 0.6
       vac = parent.vac_loc
-   return Node(vac, dirts, cost)
+   return Node(vac, dirts, cost, action)
 
+#this function takes in a tree with root of the given state, and finds least cost path that will clean all the rooms
 def uniform_cost_tree_search(tree: Tree):
-   #fringe = [tree.root]
    fringe = min_queue()
    fringe.insert(tree.root)
+   start = datetime.datetime.now()
    expanded = 0
+   generated = 1
    while(True):
-   #for i in range(0,100):
+
+      #if running longer than one hour
+      if datetime.datetime.now() > STOP:
+         print("Time exceeds one hour.")
+         print("Nodes Expanded: ", expanded, "\tNodes Generated: ", generated, "\tTime: ", (datetime.datetime.now() - start).total_seconds())
+         return 0
+
+      #If solution cannot be found
       if len(fringe.queue) == 0:
          print("FAIL")
          return 0
-      # print("\n\n")
-      # for i in fringe.queue:
-      #    print(i.cost, end=" ")
+
       #Pop the lowest cost node in fringe
       next_node = fringe.pop()
+      expanded = expanded + 1
 
       #Check if all rooms are cleaned
       if len(next_node.dirt_loc) == 0:
-         print("Final:")
-         print("Vac: ", next_node.vac_loc, "\tCost: ", next_node.cost, "\tDirt: ", next_node.dirt_loc)
+         print("Path was found!")
+         print("Nodes Expanded: ", expanded, "\tNodes Generated: ", generated, "\tTime: ", (datetime.datetime.now() - start).total_seconds())
+         parent = next_node.parent
+         moves = 1
+         print("Sequence:")
+         while parent != None:
+            print(parent.action)
+            moves = moves + 1
+         print("Number of moves: ", moves)
+         print("Cost: ", next_node.cost)
          return next_node
-      #fringe.remove(next_node)
+
       #Now expand node
-      #if expanded < 5:
-      print("Vac: ", next_node.vac_loc, "\tCost: ", next_node.cost, "\tDirt: ", next_node.dirt_loc, "\tActions: ", next_node.next_actions)
-      #expanded = expanded + 1
+      print("First five nodes expanded:")
+      if expanded <= 5:
+         print(next_node.action)
+         #print("Vacuum Position: ", next_node.vac_loc, "\tCost: ", next_node.cost, "\tAction: ", next_node.action, "\tDirt Locations: ", next_node.dirt_loc)
       for action in next_node.next_actions:
-         if(next_node.cost < 7.0):
-            fringe.insert(insert_node(next_node, action))
-            #next_node.next_actions.remove(action)
+        # if((next_node.cost > 5 and len(next_node.dirt_loc) < 3) or next_node.cost <= 5):
+         node = insert_node(next_node, action)
+         if (node != None):
+            fringe.insert(node)
+            generated = generated + len(node.next_actions)
 
 # todo
 # create expand helper function
@@ -164,7 +193,7 @@ def main():
    vacuum = (2,2)
    dirt = [(1,2), (2,4), (3,5)]
    #dirt = [(2,2)]
-   tree = Tree(Node(vacuum,dirt, 0.0))
+   tree = Tree(Node(vacuum,dirt, 0.0, None))
    uniform_cost_tree_search(tree)
    # uniform_cost_graph_search(tree)
    # iterative_deepening_tree_search(tree)
