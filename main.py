@@ -168,11 +168,14 @@ def idts_expand(node: Node, fringe: list)-> int:
       if action in node_action:
          new_nodes.append((node_action[action], action))
    
+   num_nodes_added = len(new_nodes)
+   
    while (len(new_nodes) > 0):
       next = new_nodes.pop()
       fringe.append(next[0])
       print(f'{next[1]}\t{next[0]}')
-   return len(new_nodes)
+   
+   return num_nodes_added
 
 
 def idts_sol(goal_node: Node, first_five: list, start_time: float, num_expanded: int, num_generated: int):
@@ -233,11 +236,15 @@ def iterative_deepening_tree_search(tree: Tree):
             idts_sol(current_node, first_five, start_time, num_expanded, num_generated)
             return
 
-         if (current_node.depth > max_depth): # check depth
+         # print(f'pre {num_generated}')
+         if (current_node.depth >= max_depth): # check depth
             continue
 
          num_generated = num_generated + idts_expand(current_node, fringe)
+         # print(f'post {num_generated}')
 
+
+   
       max_depth = max_depth + 1
       if (time.time() - start_time > 60*60):
          print('Search time-out')
