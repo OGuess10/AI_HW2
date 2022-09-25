@@ -5,6 +5,7 @@
 import time
 import datetime
 STOP = datetime.datetime.now() + datetime.timedelta(hours=1)
+
 #Rooms
 ROOM_TOTAL = 20
 ROOM_ROWS = 4
@@ -100,6 +101,7 @@ def new_rooms_node(parent: Node, action: str)-> Node:
 
 #this function takes in a tree with root of the given state, and finds least cost path that will clean all the rooms
 def uniform_cost_tree_search(tree: Tree):
+   print("First five nodes expanded:")
    fringe = min_queue()
    fringe.insert(tree.root)
    start = datetime.datetime.now()
@@ -137,7 +139,6 @@ def uniform_cost_tree_search(tree: Tree):
          return next_node
 
       #Now expand node
-      print("First five nodes expanded:")
       if expanded <= 5:
          print(next_node.action)
          #print("Vacuum Position: ", next_node.vac_loc, "\tCost: ", next_node.cost, "\tAction: ", next_node.action, "\tDirt Locations: ", next_node.dirt_loc)
