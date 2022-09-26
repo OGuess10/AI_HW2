@@ -30,6 +30,7 @@ Idts_sol prints out the statics for the search algorithm once the goal is found 
 Language: Python v3.9 <br>
 Hardware used was MacBook Pro and a Dell laptop <br>
 <p> Both instances of Iterative Deepening Tree Search were run on a Dell laptop with an Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz </p>
+All 4 Uniform Cost searches were done on the MacBook Pro <br>
 
 ## Results
 
@@ -48,10 +49,10 @@ Hardware used was MacBook Pro and a Dell laptop <br>
 
 | Result | Uniform Cost Tree Search| Uniform Cost Graph Search | Iterative Deepening Tree Search |
 | --- | --- | --- | --- |
-| 1st 5 Exp. Nodes | Start, Suck, Down, Up, Right | Start, Suck, Down, Up, Right | --- |
-| No. Nodes Expanded | 58781 | --- | --- |
-| No. Nodes Generated | 1116384 | --- | --- |
-| CPU Execution TIme (seconds) | 3959.2 | --- | --- |
-| Solution | Start, Left, Up, Suck, Up, Right, Right, Down, Down, Suck, Right, Up, Suck | Start, Left, Up, Suck, Up, Right, Right, Down, Down, Suck, Right, Up, Suck | --- |
-| No. of Moves | 12 | 12 | --- |
-| Cost of Solution | 9.3 | 9.3 | --- |
+| 1st 5 Exp. Nodes | Start, Suck, Down, Up, Right | None, left, up, right, right | None, Up, Left, Suck, Right, Down |
+| No. Nodes Expanded | 58781 | 123 | 2332722 |
+| No. Nodes Generated | 1116384 | 770 | 5159508 |
+| CPU Execution TIme (seconds) | 3959.2 | 0.005983 | 36 |
+| Solution | Start, Left, Up, Suck, Up, Right, Right, Down, Down, Suck, Right, Up, Suck | Start, Left, Up, Suck, Up, Right, Right, Down, Down, Suck, Right, Up, Suck | N/A |
+| No. of Moves | 12 | 12 | "10" |
+| Cost of Solution | 9.3 | 9.3 | Time Out |

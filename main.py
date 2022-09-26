@@ -246,15 +246,18 @@ def iterative_deepening_tree_search(tree: Tree):
             idts_sol(current_node, first_five, start_time, num_expanded, num_generated)
             return
 
+         if (time.time() - start_time > 60*60):
+            idts_sol(current_node, first_five, start_time, num_expanded, num_generated)
+            print('Search time-out')
+
+            return
+
          if (current_node.depth >= max_depth): # check depth
             continue
 
          num_generated = num_generated + idts_expand(current_node, fringe)
 
       max_depth = max_depth + 1
-      if (time.time() - start_time > 60*60):
-         print('Search time-out')
-         return
 
 #This function uses a graph to perform a uniform cost search. It finds a path where the cost is the least in order to clean all of the rooms.
 def uniform_cost_graph_search(tree: Tree):
