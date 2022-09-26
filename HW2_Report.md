@@ -53,6 +53,6 @@ All 4 Uniform Cost searches were done on the MacBook Pro <br>
 | No. Nodes Expanded | 58781 | 123 | 2332722 |
 | No. Nodes Generated | 1116384 | 770 | 5159508 |
 | CPU Execution TIme (seconds) | 3959.2 | 0.005983 | 36 |
-| Solution | Start, Left, Up, Suck, Up, Right, Right, Down, Down, Suck, Right, Up, Suck | Start, Left, Up, Suck, Up, Right, Right, Down, Down, Suck, Right, Up, Suck | N/A |
-| No. of Moves | 12 | 12 | "10" |
-| Cost of Solution | 9.3 | 9.3 | Time Out |
+| Solution | Start, Left, Up, Suck, Up, Right, Right, Down, Down, Suck, Right, Up, Suck | Start, Left, Up, Suck, Up, Right, Right, Down, Down, Suck, Right, Up, Suck | Start, Right, Suck, Up, Right, Suck, Up, Left, Left, Suck, Left, Down, Suck |
+| No. of Moves | 12 | 12 | 13 |
+| Cost of Solution | 9.3 | 9.3 | 9.5 |
