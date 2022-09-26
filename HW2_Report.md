@@ -50,9 +50,9 @@ All 4 Uniform Cost searches were done on the MacBook Pro <br>
 | Result | Uniform Cost Tree Search| Uniform Cost Graph Search | Iterative Deepening Tree Search |
 | --- | --- | --- | --- |
 | 1st 5 Exp. Nodes | Start, Suck, Down, Up, Right | None, left, up, right, right | None, Up, Left, Suck, Right, Down |
-| No. Nodes Expanded | 58781 | 123 | 2332722 |
-| No. Nodes Generated | 1116384 | 770 | 5159508 |
-| CPU Execution TIme (seconds) | 3959.2 | 0.005983 | 36 |
+| No. Nodes Expanded | 58781 | 148386 | 2332722 |
+| No. Nodes Generated | 1116384 | 2893528 | 5159508 |
+| CPU Execution TIme (seconds) | 3959.2 | 3600.0 | 36 |
 | Solution | Start, Left, Up, Suck, Up, Right, Right, Down, Down, Suck, Right, Up, Suck | Start, Left, Up, Suck, Up, Right, Right, Down, Down, Suck, Right, Up, Suck | N/A |
 | No. of Moves | 12 | 12 | "10" |
 | Cost of Solution | 9.3 | 9.3 | Time Out |
