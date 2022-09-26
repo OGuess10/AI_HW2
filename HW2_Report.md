@@ -48,10 +48,10 @@ Hardware used was MacBook Pro and a Dell laptop <br>
 
 | Result | Uniform Cost Tree Search| Uniform Cost Graph Search | Iterative Deepening Tree Search |
 | --- | --- | --- | --- |
-| 1st 5 Exp. Nodes | Start, Suck, Down, Up, Right | Start, Suck, Down, Up, Right | --- |
-| No. Nodes Expanded | 58781 | --- | --- |
-| No. Nodes Generated | 1116384 | --- | --- |
-| CPU Execution TIme (seconds) | 3959.2 | --- | --- |
-| Solution | Start, Left, Up, Suck, Up, Right, Right, Down, Down, Suck, Right, Up, Suck | Start, Left, Up, Suck, Up, Right, Right, Down, Down, Suck, Right, Up, Suck | --- |
-| No. of Moves | 12 | 12 | --- |
-| Cost of Solution | 9.3 | 9.3 | --- |
+| 1st 5 Exp. Nodes | Start, Suck, Down, Up, Right | None, left, up, right, right | --- |
+| No. Nodes Expanded | 58781 | 123 | --- |
+| No. Nodes Generated | 1116384 | 770 | --- |
+| CPU Execution TIme (seconds) | 3959.2 | 0.005983 | 36 |
+| Solution | Start, Left, Up, Suck, Up, Right, Right, Down, Down, Suck, Right, Up, Suck | Start, Left, Up, Suck, Up, Right, Right, Down, Down, Suck, Right, Up, Suck | N/A |
+| No. of Moves | 12 | 12 | "10" |
+| Cost of Solution | 9.3 | 9.3 | Time Out |
