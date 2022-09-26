@@ -5,7 +5,6 @@
 from cgi import print_form
 import time
 import datetime
-STOP = datetime.datetime.now() + datetime.timedelta(hours=1)
 
 #Rooms
 ROOM_TOTAL = 20
@@ -18,6 +17,9 @@ RIGHT = 0.9
 UP = 0.8
 DOWN = 0.7
 SUCK = 0.6
+
+#Global Stop
+STOP = datetime.datetime.now() + datetime.timedelta(hours=1)
 
 #This is a node class for the vacuum world problem
 class Node():
@@ -64,6 +66,7 @@ class min_queue:
    def __init__(self):
       self.queue = []
 
+   #Insert a node into the queue and place it into sorted order
    def insert(self, node: Node):
       j = len(self.queue)
       for i in range(len(self.queue)):
@@ -76,6 +79,7 @@ class min_queue:
          self.queue = self.queue[:j] + [node] + self.queue[j:]
       #self.queue.insert(j,node)
 
+   #pop the least cost node from the queue
    def pop(self):
       return self.queue.pop()
 
@@ -159,6 +163,7 @@ def uniform_cost_tree_search(tree: Tree):
             fringe.insert(node)
             generated = generated + len(node.next_actions)
 
+#this function expands a node for iterative deepeing tree search
 def idts_expand(node: Node, fringe: list)-> int:
    ''' Expands each possible state after the given node and adds it to the fringe. '''
    actions = ['up', 'left', 'suck', 'right', 'down']
@@ -181,7 +186,7 @@ def idts_expand(node: Node, fringe: list)-> int:
    
    return num_nodes_added
 
-
+#This function prints the solution to the iterative deepening search tree after it has been completed
 def idts_sol(goal_node: Node, first_five: list, start_time: float, num_expanded: int, num_generated: int):
    stop_time = time.time()
    exec_time = stop_time - start_time
@@ -202,6 +207,7 @@ def idts_sol(goal_node: Node, first_five: list, start_time: float, num_expanded:
    for node in solution_path:
       print(node)
    
+#This function uses iterative deepening search to find a path to the solution
 def iterative_deepening_tree_search(tree: Tree):
    ''' BFS, but at increasing depths. '''
 
@@ -250,6 +256,7 @@ def iterative_deepening_tree_search(tree: Tree):
          print('Search time-out')
          return
 
+#This function uses a graph to perform a uniform cost search. It finds a path where the cost is the least in order to clean all of the rooms.
 def uniform_cost_graph_search(tree: Tree):
    closed = []
    fringe = min_queue()
@@ -322,12 +329,15 @@ def main():
    dirt = [(1,2), (2,4), (3,5)]
    tree = Tree(Node(vacuum,dirt, 0.0, None))
    
+   STOP = datetime.datetime.now() + datetime.timedelta(hours=1)
    print('Instance 1 Uniform Cost Tree Search')
    # uniform_cost_tree_search(tree)
    
+   STOP = datetime.datetime.now() + datetime.timedelta(hours=1)
    print('Instance 1 Uniform Cost Graph Search')
-   # uniform_cost_graph_search(tree)
+   uniform_cost_graph_search(tree)
 
+   STOP = datetime.datetime.now() + datetime.timedelta(hours=1)
    print('Instance 1 Iterative Deepening Tree Search')
    # iterative_deepening_tree_search(tree)
 
@@ -337,12 +347,15 @@ def main():
    dirt = [(1,2), (2,1), (2,4), (3,3)]
    tree = Tree(Node(vacuum,dirt, 0.0, None))
 
+   STOP = datetime.datetime.now() + datetime.timedelta(hours=1)
    print('Instance 2 Uniform Cost Tree Search')
    # uniform_cost_tree_search(tree)
    
+   STOP = datetime.datetime.now() + datetime.timedelta(hours=1)
    print('Instance 2 Uniform Cost Graph Search')
    # uniform_cost_graph_search(tree)
 
+   STOP = datetime.datetime.now() + datetime.timedelta(hours=1)
    print('Instance 2 Iterative Deepening Tree Search')
    iterative_deepening_tree_search(tree)
 
