@@ -21,6 +21,10 @@ Idts_sol prints out the statics for the search algorithm once the goal is found 
 
 <p> For the uniform cost tree search algorithm, a minimum queue was created for the fringe. Every insertion places that node into sorted order from least to greatest. The initial node is placed into the queue first and is then popped off and expanded. It will expand each possible action of that node and add those nodes to the fringe. This is done repeatedly until the goal state is reached (all rooms are clean), until the time has passed an hour, or there are no more items in the fringe (meaning a solution was not found). </p>
 
+### Uniform Cost Graph Search
+
+<p> For this algorithm, a minimum queue is used for the fringe and an array is used to store closed nodes. This means that a state (a pair of vacuum location and dirt locations) cannot be visited twice. So once a node has been expanded, it will be added to the closed nodes. Then, when looking to expand a node, the algorithm will check to see if the state has already been visited or not. If it has not, then the node will be added to the fringe. The minimum queue is used to find uniform cost, so that the next expanded node is the node with the least cost. </p>
+
 ## Programming Language, Hardware
 
 Language: Python v3.9 <br>
