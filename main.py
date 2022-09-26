@@ -338,7 +338,7 @@ def main():
    
    STOP = datetime.datetime.now() + datetime.timedelta(hours=1)
    print('Instance 1 Uniform Cost Graph Search')
-   uniform_cost_graph_search(tree)
+   # uniform_cost_graph_search(tree)
 
    STOP = datetime.datetime.now() + datetime.timedelta(hours=1)
    print('Instance 1 Iterative Deepening Tree Search')
@@ -356,10 +356,10 @@ def main():
    
    STOP = datetime.datetime.now() + datetime.timedelta(hours=1)
    print('Instance 2 Uniform Cost Graph Search')
-   # uniform_cost_graph_search(tree)
+   uniform_cost_graph_search(tree)
 
    STOP = datetime.datetime.now() + datetime.timedelta(hours=1)
    print('Instance 2 Iterative Deepening Tree Search')
-   iterative_deepening_tree_search(tree)
+   # iterative_deepening_tree_search(tree)
 
 main()

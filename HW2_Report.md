@@ -38,21 +38,21 @@ All 4 Uniform Cost searches were done on the MacBook Pro <br>
 
 | Result | Uniform Cost Tree Search| Uniform Cost Graph Search | Iterative Deepening Tree Search |
 | --- | --- | --- | --- |
-| 1st 5 Exp. Nodes | Start(no action), Suck, Down, Up, Right | None, left, up, right, right | Initial state, Initial state, Up, Left, Suck |
+| 1st 5 Exp. Nodes | Start(no action), Suck, Down, Up, Right | Start, Suck, Down, Up, Right | Initial state, Initial state, Up, Left, Suck |
 | No. Nodes Expanded | 75494 | 76213 | 507937 |
 | No. Nodes Generated | 1441976 | 1454723 | 1185779 |
 | CPU Execution TIme (seconds) | 4974.9 | 3600.0 | 363.3 |
-| Solution | Start, Up, Suck, Right, Right, Down, Suck, Down, Right, Suck | right, right, suck, right, down, suck, left, up, left, up, left, suck | Start, Up, Suck, Right, Right, Down, Suck, Right, Down, Suck |
-| No. of Moves | 9 | 13 | 9 |
-| Cost of Solution | 6.7 | 9.8 | 6.7 |
+| Solution | Start, Up, Suck, Right, Right, Down, Suck, Down, Right, Suck | Start, Up, Suck, Right, Right, Down, Suck, Down, Right, Suck | Start, Up, Suck, Right, Right, Down, Suck, Right, Down, Suck |
+| No. of Moves | 9 | 9 | 9 |
+| Cost of Solution | 6.7 | 6.7 | 6.7 |
 ### Instance 2
 
 | Result | Uniform Cost Tree Search| Uniform Cost Graph Search | Iterative Deepening Tree Search |
 | --- | --- | --- | --- |
 | 1st 5 Exp. Nodes | Start, Suck, Down, Up, Right | None, left, up, right, right | None, Up, Left, Suck, Right, Down |
-| No. Nodes Expanded | 58781 | 123 | 2332722 |
-| No. Nodes Generated | 1116384 | 770 | 5159508 |
-| CPU Execution TIme (seconds) | 3959.2 | 0.005983 | 36 |
+| No. Nodes Expanded | 58781 | 148386 | 2332722 |
+| No. Nodes Generated | 1116384 | 2893528 | 5159508 |
+| CPU Execution TIme (seconds) | 3959.2 | 3600.0 | 36 |
 | Solution | Start, Left, Up, Suck, Up, Right, Right, Down, Down, Suck, Right, Up, Suck | Start, Left, Up, Suck, Up, Right, Right, Down, Down, Suck, Right, Up, Suck | Start, Right, Suck, Up, Right, Suck, Up, Left, Left, Suck, Left, Down, Suck |
 | No. of Moves | 12 | 12 | 13 |
 | Cost of Solution | 9.3 | 9.3 | 9.5 |
