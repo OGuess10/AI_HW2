@@ -172,7 +172,7 @@ def idts_expand(node: Node, fringe: list)-> int:
    num_nodes_added = len(new_nodes)
    
    while (len(new_nodes) > 0):
-      next = new_nodes.pop()
+      next = new_nodes.pop(0)
       fringe.append(next[0])
       print(f'{next[1]}\t{next[0]}')
    
@@ -237,15 +237,11 @@ def iterative_deepening_tree_search(tree: Tree):
             idts_sol(current_node, first_five, start_time, num_expanded, num_generated)
             return
 
-         # print(f'pre {num_generated}')
          if (current_node.depth >= max_depth): # check depth
             continue
 
          num_generated = num_generated + idts_expand(current_node, fringe)
-         # print(f'post {num_generated}')
 
-
-   
       max_depth = max_depth + 1
       if (time.time() - start_time > 60*60):
          print('Search time-out')
@@ -302,8 +298,13 @@ def uniform_cost_graph_search(tree: Tree):
             is_in_closed = False
             if (node != None):
                for i in closed:
-                  if((node.vac_loc in closed[i].vac_loc) and (node.dirt_loc in closed[i].dirt_loc)):
-                     is_in_closed = True
+                  if (node.vac_loc[0] == (closed[i].vac_loc)[0] and node.vac_loc[1] == (closed[i].vac_loc)[1]):
+                     if (len(node.dirt_loc) == len(closed[i].dirt_loc)):
+                        for j in range(0, len(len(node.dirt_loc))):
+                           if (set(node.dirt_loc) != set(closed[j].dirt_loc)):
+                              break 
+
+                        is_in_closed = True
                if(not is_in_closed):
                   fringe.insert(node)
                   generated = generated + len(node.next_actions)
@@ -321,7 +322,7 @@ def main():
    # uniform_cost_graph_search(tree)
 
    print('Instance 1 Iterative Deepening Tree Search')
-   # iterative_deepening_tree_search(tree)
+   iterative_deepening_tree_search(tree)
 
 
    ### Instance 2 ###
@@ -330,7 +331,7 @@ def main():
    tree = Tree(Node(vacuum,dirt, 0.0, None))
 
    print('Instance 2 Uniform Cost Tree Search')
-   uniform_cost_tree_search(tree)
+   # uniform_cost_tree_search(tree)
    
    print('Instance 2 Uniform Cost Graph Search')
    # uniform_cost_graph_search(tree)
