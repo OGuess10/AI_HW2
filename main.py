@@ -302,19 +302,22 @@ def uniform_cost_graph_search(tree: Tree):
          for action in next_node.next_actions:
          # if((next_node.cost > 5 and len(next_node.dirt_loc) < 3) or next_node.cost <= 5):
             node = insert_node(next_node, action)
-            is_in_closed = False
             if (node != None):
-               for i in closed:
-                  if (node.vac_loc[0] == (closed[i].vac_loc)[0] and node.vac_loc[1] == (closed[i].vac_loc)[1]):
-                     if (len(node.dirt_loc) == len(closed[i].dirt_loc)):
-                        for j in range(0, len(len(node.dirt_loc))):
-                           if (set(node.dirt_loc) != set(closed[j].dirt_loc)):
-                              break 
+               fringe.insert(node)
+               generated = generated + len(node.next_actions)
+            # is_in_closed = False
+            # if (node != None):
+            #    for i in closed:
+            #       if (node.vac_loc[0] == (closed[i].vac_loc)[0] and node.vac_loc[1] == (closed[i].vac_loc)[1]):
+            #          if (len(node.dirt_loc) == len(closed[i].dirt_loc)):
+            #             for j in range(0, len(len(node.dirt_loc))):
+            #                if (set(node.dirt_loc) != set(closed[j].dirt_loc)):
+            #                   break 
 
-                        is_in_closed = True
-               if(not is_in_closed):
-                  fringe.insert(node)
-                  generated = generated + len(node.next_actions)
+            #             is_in_closed = True
+            #    if(not is_in_closed):
+            #       fringe.insert(node)
+            #       generated = generated + len(node.next_actions)
 
 def main():
    #instance 1
@@ -328,11 +331,11 @@ def main():
    
    STOP = datetime.datetime.now() + datetime.timedelta(hours=1)
    print('Instance 1 Uniform Cost Graph Search')
-   # uniform_cost_graph_search(tree)
+   uniform_cost_graph_search(tree)
 
    STOP = datetime.datetime.now() + datetime.timedelta(hours=1)
    print('Instance 1 Iterative Deepening Tree Search')
-   iterative_deepening_tree_search(tree)
+   # iterative_deepening_tree_search(tree)
 
 
    ### Instance 2 ###
