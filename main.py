@@ -307,18 +307,18 @@ def uniform_cost_graph_search(tree: Tree):
             node = insert_node(next_node, action)
             # Check if node is in closed
             if (node != None):
-               is_in_closed = False
-               for closed_node in closed:
-                  if ((node.vac_loc[0] == closed_node.vac_loc[0]) and (node.vac_loc[1] == closed_node.vac_loc[1])):
-                     if (len(node.dirt_loc) == len(closed_node.dirt_loc)):
-                        for j in range(0, len(node.dirt_loc)):
-                           if (set(node.dirt_loc[j]) != set(closed_node.dirt_loc[j])):
-                              break 
+               # is_in_closed = False
+               # for closed_node in closed:
+               #    if ((node.vac_loc[0] == closed_node.vac_loc[0]) and (node.vac_loc[1] == closed_node.vac_loc[1])):
+               #       if (len(node.dirt_loc) == len(closed_node.dirt_loc)):
+               #          for j in range(0, len(node.dirt_loc)):
+               #             if (set(node.dirt_loc[j]) != set(closed_node.dirt_loc[j])):
+               #                break 
 
-                        is_in_closed = True
-               if(not is_in_closed):
-                  fringe.insert(node)
-                  generated = generated + len(node.next_actions)
+               #          is_in_closed = True
+               # if(not is_in_closed):
+               fringe.insert(node)
+               generated = generated + len(node.next_actions)
          closed.append(next_node)
          next_node.state = 'closed'
 
