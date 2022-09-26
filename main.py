@@ -77,7 +77,10 @@ class min_queue:
       #self.queue.insert(j,node)
 
    def pop(self):
-      return self.queue.pop(len(self.queue)-1)
+      return self.queue.pop()
+
+   def pop_graph(self):
+      return self.queue.pop(0)
 
 #This function takes a parent node and an action and creates a new node of the action
 def new_rooms_node(parent: Node, action: str)-> Node:
@@ -263,51 +266,55 @@ def uniform_cost_graph_search(tree: Tree):
          return 0
 
       #If solution cannot be found
-      if len(fringe.queue) == 0:
+      if (len(fringe.queue) == 0):
          print("FAIL")
          return 0
 
       #Pop the lowest cost node in fringe
-      next_node = fringe.pop()
+      next_node = fringe.pop_graph()
       expanded = expanded + 1
       
       #Check if all rooms are cleaned
       if len(next_node.dirt_loc) == 0:
          print("Path was found!")
          print("Nodes Expanded: ", expanded, "\tNodes Generated: ", generated, "\tTime: ", (datetime.datetime.now() - start).total_seconds())
-         parent = next_node.parent
+         parent = next_node
          moves = 1
          print("Sequence:")
-         while parent != None:
-            print(parent.action)
+         sol_sequence = []
+         while parent.parent != None:
+            sol_sequence.insert(0, parent.action)
+            parent = parent.parent
             moves = moves + 1
+         print(sol_sequence)
          print("Number of moves: ", moves)
          print("Cost: ", next_node.cost)
          return next_node
 
       #Check if state of node is open or closed
       if next_node.state != 'closed':
-         closed.append(next_node)
-         next_node.state = 'closed'
-          #Now expand node
+         # Now expand node
          if expanded <= 5:
             print(next_node.action)
          for action in next_node.next_actions:
-         # if((next_node.cost > 5 and len(next_node.dirt_loc) < 3) or next_node.cost <= 5):
             node = insert_node(next_node, action)
-            is_in_closed = False
+            # Check if node is in closed
             if (node != None):
-               for i in closed:
-                  if (node.vac_loc[0] == (closed[i].vac_loc)[0] and node.vac_loc[1] == (closed[i].vac_loc)[1]):
-                     if (len(node.dirt_loc) == len(closed[i].dirt_loc)):
-                        for j in range(0, len(len(node.dirt_loc))):
-                           if (set(node.dirt_loc) != set(closed[j].dirt_loc)):
+               is_in_closed = False
+               for closed_node in closed:
+                  if ((node.vac_loc[0] == closed_node.vac_loc[0]) and (node.vac_loc[1] == closed_node.vac_loc[1])):
+                     if (len(node.dirt_loc) == len(closed_node.dirt_loc)):
+                        for j in range(0, len(node.dirt_loc)):
+                           if (set(node.dirt_loc[j]) != set(closed_node.dirt_loc[j])):
                               break 
 
                         is_in_closed = True
                if(not is_in_closed):
                   fringe.insert(node)
                   generated = generated + len(node.next_actions)
+         closed.append(next_node)
+         next_node.state = 'closed'
+
 
 def main():
    #instance 1
@@ -322,7 +329,7 @@ def main():
    # uniform_cost_graph_search(tree)
 
    print('Instance 1 Iterative Deepening Tree Search')
-   iterative_deepening_tree_search(tree)
+   # iterative_deepening_tree_search(tree)
 
 
    ### Instance 2 ###
@@ -337,6 +344,6 @@ def main():
    # uniform_cost_graph_search(tree)
 
    print('Instance 2 Iterative Deepening Tree Search')
-   # iterative_deepening_tree_search(tree)
+   iterative_deepening_tree_search(tree)
 
 main()
